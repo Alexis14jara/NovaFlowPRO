@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novaflow PRO</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="logo">
+                <img src="./assets/images/icon.png" alt="Logo" style="width: 28px; height: 28px; object-fit: contain;">
+                <h1>Novaflow <span style="color: #ecc94b; font-size: 0.8em;">PRO</span></h1>
+
+                <div class="header-actions" style="margin-left: auto; display: flex; gap: 5px;">
+                    <button id="btn-support" class="icon-btn" title="Soporte Premium">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                            </path>
+                        </svg>
+                    </button>
+
+                    <div class="help-wrapper" style="position: relative;">
+                        <button id="btn-help" class="icon-btn">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                            </svg>
+                        </button>
+
+                        <div id="help-tooltip" class="help-tooltip">
+                            <h4>Guía NovaFlow PRO</h4>
+                            <ol>
+                                <li>Configura los ajustes de velocidad y seguridad.</li>
+                                <li>Dale un Nombre a tu campaña.</li>
+                                <li>Agrega nueva etiqueta y seleccionala</li>
+                                <li>Agrega los mensajes (pool)</li>
+                                <li>Agrega los contactos</li>
+                                <li>Comienza la campaña</li>
+                                <li>Revisa el reporte</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <button class="nav-btn active" data-tab="campaign">Campaña</button>
+                <button class="nav-btn" data-tab="history">Historial</button>
+                <button class="nav-btn" data-tab="settings">Ajustes</button>
+            </nav>
+        </header>
+
+        <main class="app-content">
+            <!-- Sección Campaña -->
+            <section id="campaign" class="tab-content active">
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <span class="stat-value" id="stat-sent">0</span>
+                        <span class="stat-label">Enviados</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="stat-pending">0</span>
+                        <span class="stat-label">Pendientes</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="stat-failed">0</span>
+                        <span class="stat-label">Fallidos</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Nombre de Campaña</label>
+                    <input type="text" id="campaign-name" placeholder="Ej: Ofertas Enero">
+                </div>
+
+                <div class="form-group">
+                    <label>Etiquetas</label>
+                    <div class="tags-container" id="tags-wrapper">
+                        <!-- Tags generados dinámicamente -->
+                        <button id="btn-add-tag" class="btn-small-outline">+ Etiqueta</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Mensajes (Pool)
+                        <span class="info-icon" data-title="Variación de Mensajes"
+                            data-desc="El sistema elegirá 1 mensaje al azar por contacto. Ayuda a evitar que WhatsApp detecte spam.">?</span>
+                    </label>
+                    <div id="message-pool" class="message-pool-container">
+                        <div class="pool-item">
+                            <textarea class="message-input" rows="3" placeholder="Mensaje principal..."></textarea>
+                            <button class="btn-remove-msg" style="display:none;">✕</button>
+                        </div>
+                    </div>
+                    <button id="btn-add-msg" class="btn-text-icon" style="margin-top:5px; font-size:0.9rem;">
+                        <span>+ Agregar Alternativa</span>
+                    </button>
+                </div>
+
+                <div class="form-group">
+                    <label>Contactos
+                        <span class="info-icon" data-title="Formato de Números"
+                            data-desc="Ingresa los números con código de país. Ejemplo: +595981... o 595981... (Uno por línea).">?</span>
+                    </label>
+                    <textarea id="contacts" rows="5" placeholder="Pega los números aquí..."></textarea>
+                </div>
+
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <span class="stat-value" id="time-total" style="font-size: 1.1rem;">--:--</span>
+                        <span class="stat-label">Total Est.</span>
+                        <div id="countdown-wrapper"
+                            style="margin-top:5px; font-size:0.8rem; color:var(--text-muted); display:none;">
+                            Siguiente: <span id="time-estimate"
+                                style="color:var(--primary-color); font-weight:bold;">--</span>s
+                        </div>
+                    </div>
+                </div>
+
+                <div id="control-buttons" class="button-container">
+                    <button id="start-btn" class="btn-primary">
+                        <span>Iniciar Campaña</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path>
+                        </svg>
+                    </button>
+                    <!-- Pause/Stop Buttons -->
+                    <button id="pause-btn" class="btn-warning" style="display:none"><span>Pausar</span></button>
+                    <button id="stop-btn" class="btn-danger" style="display:none"><span>Parar</span></button>
+                    <button id="resume-btn" class="btn-success" style="display:none"><span>Continuar</span></button>
+                </div>
+            </section>
+
+            <!-- Sección Historial -->
+            <section id="history" class="tab-content">
+                <div class="history-controls"
+                    style="margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px;">
+                    <!-- Row 1: Search -->
+                    <input type="text" id="hist-filter-text" placeholder="Buscar por nombre, teléfono..."
+                        style="width: 100%;">
+
+                    <!-- Row 2: Filters & Actions -->
+                    <div style="display: flex; gap: 8px;">
+                        <select id="hist-filter-tag" style="flex: 1;">
+                            <option value="">Todas las Etiquetas</option>
+                        </select>
+                        <input type="date" id="hist-filter-date" style="flex: 1; color-scheme: dark;">
+                        <button id="btn-export-csv" class="icon-btn" title="Exportar Todo"
+                            style="border: 1px solid var(--border-color);">
+                            📥
+                        </button>
+                    </div>
+                </div>
+                <div id="history-list" class="history-list">
+                    <!-- Items -->
+                </div>
+            </section>
+
+            <!-- Sección Ajustes -->
+            <section id="settings" class="tab-content">
+                <div class="settings-group">
+                    <h3>Velocidad de Envío
+                        <span class="info-icon" data-title="Intervalos"
+                            data-desc="Recomendamos 50-70s. Aumentar si envías muchos mensajes (+100) para proteger tu cuenta.">?</span>
+                    </h3>
+                    <div class="form-group">
+                        <label>Pausa Mínima (seg)</label>
+                        <input type="number" id="min-delay" value="50" min="2">
+                    </div>
+                    <div class="form-group">
+                        <label>Pausa Máxima (seg)</label>
+                        <input type="number" id="max-delay" value="70" min="5">
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h3>Seguridad y Límites</h3>
+                    <div class="form-group">
+                        <label>Límite / Sesión
+                            <span class="info-icon" data-title="Límite Seguro"
+                                data-desc="El sistema se detendrá al llegar a este número. Recomendamos sesiones cortas (50-100) para evitar bloqueos.">?</span>
+                        </label>
+                        <input type="number" id="limit" value="50">
+                        <small class="hint">Detener automáticamente.</small>
+                    </div>
+
+                    <div class="form-group"
+                        style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+                        <label style="margin:0;">Solicitar PIN al inicio
+                            <span class="info-icon" data-title="Seguridad PIN"
+                                data-desc="Actívalo para evitar accesos no autorizados. Requiere haber configurado un PIN.">?</span>
+                        </label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="pin-required-toggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h3>Acceso Protegido</h3>
+                    <button id="btn-change-pin" class="btn-small-outline" style="width: 100%;">Cambiar PIN de
+                        Acceso</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- PIN Overlay -->
+    <div id="pin-overlay" class="pin-overlay" style="display:none;">
+        <div class="pin-card">
+            <span class="logo-icon" style="font-size: 3rem; margin-bottom: 15px;">🔒</span>
+            <h2 id="pin-title">Ingrese su PIN</h2>
+            <p id="pin-desc">Protección de NovaFlow PRO</p>
+            <input type="password" id="pin-input" maxlength="6" pattern="\d*" placeholder="******" class="pin-input">
+            <button id="pin-submit" class="btn-primary">Desbloquear</button>
+            <p id="pin-error" style="color: var(--danger); font-size: 0.9rem; display: none; margin-top: 10px;">PIN
+                Incorrecto</p>
+        </div>
+    </div>
+
+    <!-- Tag Creation Modal -->
+    <div id="tag-creation-modal" class="modal-overlay">
+        <div class="modal-card">
+            <h3 class="modal-title">Nueva Etiqueta</h3>
+            <div class="form-group" style="text-align: left;">
+                <label>Nombre</label>
+                <input type="text" id="new-tag-name" placeholder="Ej: Clientes VIP">
+            </div>
+            <div class="form-group" style="text-align: left;">
+                <label>Color</label>
+                <div class="color-picker-row" id="tag-color-picker">
+                    <div class="color-circle" style="background: #25D366;" data-color="#25D366"></div>
+                    <div class="color-circle" style="background: #34B7F1;" data-color="#34B7F1"></div>
+                    <div class="color-circle" style="background: #e53e3e;" data-color="#e53e3e"></div>
+                    <div class="color-circle" style="background: #ecc94b;" data-color="#ecc94b"></div>
+                    <div class="color-circle" style="background: #6b46c1;" data-color="#6b46c1"></div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button id="btn-cancel-tag" class="modal-btn modal-btn-secondary">Cancelar</button>
+                <button id="btn-save-tag" class="modal-btn modal-btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change PIN Modal -->
+    <div id="modal-change-pin" class="modal-overlay">
+        <div class="modal-card">
+            <span class="modal-icon" style="background:none; border:none; font-size:2rem;">🔐</span>
+            <h3 class="modal-title">Cambiar PIN</h3>
+
+            <div class="form-group" style="text-align: left;">
+                <label>PIN Actual</label>
+                <input type="password" id="old-pin" placeholder="****" maxlength="6">
+            </div>
+
+            <div class="form-group" style="text-align: left;">
+                <label>Nuevo PIN</label>
+                <input type="password" id="new-pin" placeholder="4-6 dígitos" maxlength="6">
+            </div>
+
+            <div class="modal-actions">
+                <button id="btn-cancel-pin" class="modal-btn modal-btn-secondary">Cancelar</button>
+                <button id="btn-save-pin" class="modal-btn modal-btn-primary">Actualizar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generic Modal -->
+    <div id="custom-modal" class="modal-overlay">
+        <div class="modal-card">
+            <span id="modal-icon" class="modal-icon">⚠️</span>
+            <h3 id="modal-title" class="modal-title">Atención</h3>
+            <p id="modal-message" class="modal-message">Mensaje aquí...</p>
+            <div class="modal-actions">
+                <button id="modal-cancel" class="modal-btn modal-btn-secondary" style="display:none">Cancelar</button>
+                <button id="modal-confirm" class="modal-btn modal-btn-primary">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tooltip Element -->
+    <div id="smart-tooltip" class="tooltip-popover">
+        <h5>Título</h5>
+        <p>Descripción</p>
+    </div>
+
+    <script src="assets/js/popup.js"></script>
+</body>
+
+</html>

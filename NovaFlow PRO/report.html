@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Campaña - Novaflow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f0f13;
+            --bg-card: #1c1c24;
+            --primary: #6b46c1;
+            --text-main: #ffffff;
+            --text-muted: #a0a0b0;
+            --success: #38a169;
+            --danger: #e53e3e;
+            --border: #333340;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .card .val {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .table-container {
+            background: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background-color: rgba(255, 255, 255, 0.05);
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .status-ok {
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .status-fail {
+            color: var(--danger);
+            font-weight: bold;
+        }
+
+        .error-msg {
+            font-size: 0.85rem;
+            color: var(--danger);
+            opacity: 0.9;
+        }
+
+        .timestamp {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>Reporte de Campaña</h1>
+                <p style="color: var(--text-muted); margin-top:5px;" id="campaign-date">...</p>
+            </div>
+            <button id="close-btn"
+                style="background:none; border:1px solid var(--border); color:white; padding:8px 16px; border-radius:4px; cursor:pointer;">Cerrar</button>
+        </header>
+
+        <div class="summary-cards">
+            <div class="card">
+                <h3>Total Enviados</h3>
+                <div class="val" id="total-sent" style="color: var(--success)">0</div>
+            </div>
+            <div class="card">
+                <h3>Fallidos</h3>
+                <div class="val" id="total-failed" style="color: var(--danger)">0</div>
+            </div>
+            <div class="card">
+                <h3>Total Contactos</h3>
+                <div class="val" id="total-count">0</div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Teléfono</th>
+                        <th>Hora</th>
+                        <th>Estado</th>
+                        <th>Detalle</th>
+                    </tr>
+                </thead>
+                <tbody id="report-body">
+                    <!-- JS fills this -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="assets/js/report.js"></script>
+</body>
+
+</html>
